@@ -1,0 +1,13 @@
+n = int(input())
+arr = list(map(int, input().split()))
+arr.sort(reverse=True)
+i = 0
+ans = 0
+i += arr[i]
+while i < len(arr):
+    ans += 1
+    i += arr[i]
+if i == len(arr):
+    ans += 1
+
+print(str(ans))
