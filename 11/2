@@ -1,0 +1,9 @@
+s = str(input())
+left = int(s[0])
+for i in range(1, len(s)):
+    right = int(s[i])
+    if left <= 1 or right <= 1:
+        left = left + right
+    else:
+        left = left * right
+print(left)
