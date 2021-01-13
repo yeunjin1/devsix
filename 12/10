@@ -1,0 +1,39 @@
+def solution(key, lock):
+    for i in range(4):
+        if isRight(key, lock):
+            return True
+        else:
+            key = rotateArr(key)
+    return False
+
+def isRight(key, lock):
+    N = len(lock)
+    M = len(key)
+    for k in range(-N, M + 1):
+        for l in range(-N, M + 1):
+            flg = True
+            for i in range(N):
+                for j in range(N):
+                    if i + k < 0 or i + k >= M or j + l < 0 or j + l >= M:
+                        kk = -1
+                    else:
+                        kk = key[i + k][j + l]
+                    if lock[i][j] == 0 and kk != 1:
+                        flg = False
+                    elif lock[i][j] == 1 and kk == 1:
+                        flg = False
+            if flg:
+                # print(k, l)
+                return True
+
+    return False
+
+def rotateArr(arr):
+    N = len(arr)
+    newArr = [[0] * N for _ in range(N)]
+    for i in range(N):
+        for j in range(N):
+            newArr[N - j - 1][i] = arr[i][j]
+    return newArr
+
+print(solution([[0, 0, 0], [1, 0, 0], [0, 1, 1]], [[1, 1, 1], [1, 1, 0], [1, 0, 1]]))
