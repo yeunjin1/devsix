@@ -1,0 +1,11 @@
+s = str(input())
+half = int(len(s) / 2)
+sum1 = 0
+sum2 = 0
+for i in range(half):
+    sum1 += int(s[i])
+    sum2 += int(s[i + half])
+if sum1 == sum2:
+    print("LUCKY")
+else:
+    print("READY")
