@@ -1,0 +1,12 @@
+s = str(input())
+alpha = ""
+sum = 0
+for i in s:
+    if i >= 'A' and i <= 'Z':
+        alpha += i
+    else:
+        sum += int(i)
+alpha = sorted(alpha)
+''.join(alpha)
+answer = ''.join(alpha) + str(sum)
+print(answer)
