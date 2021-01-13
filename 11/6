@@ -1,0 +1,18 @@
+def solution(food_times, k):
+    li = []
+    for i in range(len(food_times)):
+        li.append((food_times[i], i))
+    li.sort()
+    sum = 0
+    for i in range(0, len(food_times)):
+        if i == 0:
+            next = li[i][0] * (len(li) - i)
+        else:
+            next = (li[i][0] - li[i - 1][0]) * (len(li) - i)
+        if sum + next > k:
+            li = li[i:]
+            li.sort(key=lambda x:x[1])
+            return li[(k - sum) % len(li)][1] + 1
+        else:
+            sum += next
+    return -1
