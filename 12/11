@@ -1,0 +1,47 @@
+from collections import deque
+
+N = int(input())
+K = int(input())
+apple = []
+for i in range(K):
+    apple.append(tuple(map(int, input().split())))
+L = int(input())
+data = []
+for i in range(L):
+    time, dir = input().split()
+    data.append((int(time), dir))
+
+x = 1
+y = 1
+dx = [1, 0, -1, 0]
+dy = [0, 1, 0, -1]
+snake = deque([(1, 1)])
+cnt = 0
+time = 0
+data_index = 0
+while True:
+    ny = y + dy[cnt]
+    nx = x + dx[cnt]
+    time += 1
+    if ny > N or ny < 1 or nx > N or nx < 1:
+        break
+    elif (ny, nx) in snake:
+        break
+    elif (ny, nx) in apple:
+        snake.appendleft((ny, nx))
+        apple.remove((ny, nx))
+    else:
+        snake.appendleft((ny, nx))
+        snake.pop()
+    y = ny
+    x = nx
+    if data_index < len(data):
+        if time == data[data_index][0]:
+            if data[data_index][1] == 'L':
+                cnt -= 1
+            else:
+                cnt += 1
+            cnt %= 4
+            data_index += 1
+
+print(time)
