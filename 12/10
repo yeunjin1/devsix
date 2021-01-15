@@ -36,4 +36,4 @@ def rotateArr(arr):
             newArr[N - j - 1][i] = arr[i][j]
     return newArr
 
-print(solution([[0, 0, 0], [1, 0, 0], [0, 1, 1]], [[1, 1, 1], [1, 1, 0], [1, 0, 1]]))
+
