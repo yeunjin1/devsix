@@ -1,0 +1,39 @@
+from itertools import permutations
+
+
+def solution(n, weak, dist):
+    answer = len(dist) + 1
+    dist.reverse()
+    weak_size = len(weak)
+    for i in range(weak_size):
+        weak.append(weak[i] + n)
+    for i in range(weak_size):
+        weak_sliced = weak[i: i + weak_size]
+        dist_permu = list(permutations(dist, len(dist)))
+        for d in dist_permu:
+            start = weak_sliced[0]
+            d_index = 0
+            while True:
+                # 모든 사람 투입해도 해결 못함
+                if d_index >= len(d):
+                    break
+                end = start + d[d_index]
+                bigger = find_bigger(end, weak_sliced)
+                # 더 이상 취약 지점 없음
+                if bigger == -1:
+                    break
+                else:
+                    start = bigger
+                    d_index += 1
+            answer = min(d_index + 1, answer)
+
+    if answer == len(dist) + 1:
+        answer = -1
+    return answer
+
+
+def find_bigger(x, arr):
+    for a in arr:
+        if a > x:
+            return a
+    return -1
