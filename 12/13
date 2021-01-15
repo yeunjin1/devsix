@@ -1,0 +1,38 @@
+from itertools import combinations
+
+n, m = map(int, input().split())
+chicken = []
+house = []
+for i in range(n):
+    li = list(map(int, input().split()))
+    for j in range(n):
+        data = li[j]
+        if data == 1:
+            house.append((i, j))
+        elif data == 2:
+            chicken.append((i, j))
+
+dis = [[0] * len(chicken) for _ in range(len(house))]
+for i in range(len(house)):
+    c_house = house[i]
+    for j in range(len(chicken)):
+        c_chicken = chicken[j]
+        distance = abs(c_house[0] - c_chicken[0]) + abs(c_house[1] - c_chicken[1])
+        dis[i][j] = distance
+
+chicken_num = []
+for i in range(len(chicken)):
+    chicken_num.append(i)
+chicken_combi = list(combinations(chicken_num, m))
+
+ans = 2 * n * len(house)
+for chicken_picked in chicken_combi:
+    sum = 0
+    for i in range(len(house)):
+        dis_min = 2 * n
+        for j in chicken_picked:
+            dis_min = min(dis_min, dis[i][j])
+        sum += dis_min
+    ans = min(sum, ans)
+
+print(ans)
