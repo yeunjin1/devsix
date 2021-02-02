@@ -1,0 +1,8 @@
+N = int(input())
+data = []
+for j in range(N):
+    data.append(input().split())
+
+data.sort(key=lambda a: (int(-a[1]), int(a[2]), int(-a[3]), int(a[0])))
+for d in data:
+    print(d[0])
