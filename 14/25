@@ -9,7 +9,7 @@ def solution(N, stages):
             fails.append((0, i))
         else:
             fails.append((c_stages[i] / sum(c_stages[i:]), i))
-    fails_sorted = sorted(fails, key=lambda x: (-x[0], x[1]))
-    for fail in fails_sorted:
+    fails.sort(key=lambda x: (-x[0], x[1]))
+    for fail in fails:
         answer.append(fail[1])
     return answer
