@@ -1,0 +1,20 @@
+N = int(input())
+T = []
+P = []
+# i 일까지 최대 금액
+dp = [0] * N
+for i in range(N):
+    t, p = map(int, input().split())
+    T.append(t)
+    P.append(p)
+for i in range(N):
+    t, p = T[i], P[i]
+    # 전날까지의 금액이 더 클수 있으므로 더 큰값으로 갱신
+    dp[i] = max(dp[i], dp[i-1])
+    if i + t - 1 < N:
+        if i > 0:
+            # i일에 시작한 일이 끝나는 날짜까지의 최대 금액 = i-1일 까지 최대 금액 + i일 금액, 이전에 기록된 값 
+            dp[i + t - 1] = max(P[i] + dp[i - 1], dp[i + t - 1])
+        else:
+            dp[i + t - 1] = max(P[i], dp[i + t - 1])
+print(max(dp))
