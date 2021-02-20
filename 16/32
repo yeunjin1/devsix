@@ -1,0 +1,18 @@
+import copy
+
+n = int(input())
+arr = []
+arr.append(int(input()))
+
+for i in range(2, n + 1):
+    before = copy.deepcopy(arr)
+    arr = list(map(int, input().split()))
+    for j in range(i):
+        if j == 0:
+            arr[j] += before[j]
+        elif j == i - 1:
+            arr[j] += before[j - 1]
+        else:
+            arr[j] += max(before[j - 1], before[j])
+
+print(max(arr))
