@@ -1,0 +1,21 @@
+from bisect import bisect_left
+
+# x // 2, 3, 5 값이 못생긴수 배열에 이미 존재하면 x도 못생긴수
+# O(NlogN)
+n = int(input())
+x = 2
+uglies = [1]
+while len(uglies) < n:
+    value = 0
+    if x % 2 == 0:
+        value = x // 2
+    elif x % 3 == 0:
+        value = x // 3
+    elif x % 5 == 0:
+        value = x // 5
+    if value:
+        idx = bisect_left(uglies, value)
+        if uglies[idx] == value:
+            uglies.append(x)
+    x += 1
+print(uglies[-1])
