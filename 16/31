@@ -1,0 +1,17 @@
+n, m = map(int, input().split())
+li = list(map(int, input().split()))
+arr = []
+for i in range(n):
+    arr.append(li[i * m: (i + 1) * m])
+for i in range(1, m):
+    for j in range(n):
+        if j == 0:
+            arr[j][i] += max(arr[j][i - 1], arr[j + 1][i - 1])
+        elif j == n - 1:
+            arr[j][i] += max(arr[j - 1][i - 1], arr[j][i - 1])
+        else:
+            arr[j][i] += max(arr[j - 1][i - 1], arr[j][i - 1], arr[j + 1][i - 1])
+ans = []
+for i in range(n):
+    ans.append(arr[i][m - 1])
+print(max(ans))
