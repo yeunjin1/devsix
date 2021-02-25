@@ -1,0 +1,33 @@
+from bisect import bisect_left, bisect_right
+
+def solution(words, queries):
+    answer = []
+    nwords = [[] for _ in range(100001)]
+    re_nwords = [[] for _ in range(100001)]
+    for word in words:
+        nwords[len(word)].append(word)
+        re_nwords[len(word)].append(word[::-1])
+    for nword in nwords:
+        nword.sort()
+    for re_nword in re_nwords:
+        re_nword.sort()
+    for query in queries:
+        queryz = ''
+        for i in range(len(query)):
+            if query[i] == '?':
+                queryz += 'z'
+            else:
+                queryz += query[i]
+        if query[0] == '?':
+            query = query[::-1]
+            queryz = queryz[::-1]
+            left = bisect_left(re_nwords[len(query)], query)
+            right = bisect_right(re_nwords[len(query)], queryz)
+        else:
+            left = bisect_left(nwords[len(query)], query)
+            right = bisect_right(nwords[len(query)], queryz)
+
+        answer.append(right - left)
+    return answer
+
+
