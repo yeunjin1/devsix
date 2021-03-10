@@ -1,0 +1,26 @@
+N, M = map(int, input().split())
+INF = int(1e9)
+dist = [[False] * (N + 1) for _ in range(N + 1)]
+for _ in range(M):
+    a, b = map(int, input().split())
+    dist[a][b] = True
+for i in range(1, N + 1):
+    dist[i][i] = True
+
+for k in range(1, N + 1):
+    for a in range(1, N + 1):
+        for b in range(1, N + 1):
+            if dist[a][k] and dist[k][b]:
+                dist[a][b] = True
+
+ans = 0
+for i in range(1, N + 1):
+    cnt = 0
+    for j in range(1, N + 1):
+        if dist[i][j]:
+            cnt += 1
+        if dist[j][i]:
+            cnt += 1
+    if cnt == N + 1:
+        ans += 1
+print(ans)
