@@ -1,0 +1,29 @@
+import heapq
+
+T = int(input())
+INF = int(1e9)
+dy = [0, 0, 1, -1]
+dx = [1, -1, 0, 0]
+
+for _ in range(T):
+    cost = []
+    N = int(input())
+    for n in range(N):
+        cost.append(list(map(int, input().split())))
+    distance = [[INF] * N for _ in range(N)]
+    distance[0][0] = cost[0][0]
+    q = []
+    heapq.heappush(q, (cost[0][0], (0, 0)))
+    while q:
+        dist, now = heapq.heappop(q)
+        y, x = now
+        if distance[y][x] < dist:
+            continue
+        for i in range(4):
+            ny = y + dy[i]
+            nx = x + dx[i]
+            if 0 <= ny < N and 0 <= nx < N:
+                if dist + cost[ny][nx] < distance[ny][nx]:
+                    distance[ny][nx] = dist + cost[ny][nx]
+                    heapq.heappush(q, (dist + cost[ny][nx], (ny, nx)))
+    print(distance[N - 1][N - 1])
