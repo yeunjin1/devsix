@@ -1,0 +1,56 @@
+def find_parent(parents, x):
+    if parents[x] == x:
+        return x
+    else:
+        parents[x] = find_parent(parents, parents[x])
+        return parents[x]
+
+
+def union_parent(parents, a, b):
+    pa = find_parent(parents, a)
+    pb = find_parent(parents, b)
+    if pa > pb:
+        parents[pa] = pb
+    else:
+        parents[pb] = pa
+
+
+N = int(input())
+planets = []
+for _ in range(N):
+    planets.append(list(map(int, input().split())))
+
+edges = []
+parents = []
+x = []
+y = []
+z = []
+for i in range(N):
+    parents.append(i)
+    x.append((planets[i][0], i))
+    y.append((planets[i][1], i))
+    z.append((planets[i][2], i))
+x.sort()
+y.sort()
+z.sort()
+for i in range(N - 1):
+    edges.append((abs(x[i][0] - x[i + 1][0]), x[i][1], x[i + 1][1]))
+    edges.append((abs(y[i][0] - y[i + 1][0]), y[i][1], y[i + 1][1]))
+    edges.append((abs(z[i][0] - z[i + 1][0]), z[i][1], z[i + 1][1]))
+edges.sort()
+cnt = 0
+ans = 0
+flg = False
+for edge in edges:
+    cost, a, b = edge
+    if find_parent(parents, a) != find_parent(parents, b):
+        ans += cost
+        union_parent(parents, a, b)
+        cnt += 1
+    if cnt == N - 1:
+        flg = True
+        break
+if flg:
+    print(ans)
+else:
+    print(-1)
