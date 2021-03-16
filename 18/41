@@ -1,0 +1,43 @@
+# union find
+def find_parent(parents, x):
+    if parents[x] == x:
+        return x
+    else:
+        parents[x] = find_parent(parents, parents[x])
+        return parents[x]
+
+
+N = int(input())
+M = int(input())
+arr = []
+graph = []
+parents = []
+for i in range(N):
+    arr.append(list(map(int, input().split())))
+    for j in range(len(arr[i])):
+        if arr[i][j] and i < j:
+            graph.append((i, j))
+    parents.append(i)
+
+travels = list(map(int, input().split()))
+for g in graph:
+    a = g[0]
+    b = g[1]
+    pa = find_parent(parents, a)
+    pb = find_parent(parents, b)
+    if pa > pb:
+        parents[pa] = pb
+    else:
+        parents[pb] = pa
+
+for i in range(len(parents)):
+    parents[i] = find_parent(parents, parents[i])
+
+flg = False
+for i in range(len(travels) - 1):
+    if parents[travels[i] - 1] != parents[travels[i + 1] - 1]:
+        flg = True
+if flg:
+    print("NO")
+else:
+    print("YES")
